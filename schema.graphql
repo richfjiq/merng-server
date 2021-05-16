@@ -1,0 +1,56 @@
+type Comment
+    @model
+    @auth(rules: [{ allow: owner, operations: [create, delete, update] }]) {
+        id: ID!
+        author: Profile!
+        content: String!
+        createdAt: AWSDateTime!
+    }
+type Profile
+  @model
+  @key(fields: ["userId"])
+  @auth(rules: [{ allow: owner, operations: [create, update, delete] }]) {
+  userId: ID!
+  fitnessGoal: String
+  stepsDaily: Int
+  calBurnedDaily: Int
+  milesDaily: Int
+  plannedExerciseDurationDaily: Int
+  weight: Int
+  height: Height
+  sex: String
+  avatarSex: String
+  bodyType: String
+  activityLevel: String
+  motivationalBio: String
+  activityTracker: String
+  avatarJSON: String
+  avatarKey: String
+  avatarEdited: Boolean
+  fitbitAccessToken: String
+  fitCoinsBalance: Float
+  fcmToken: String
+  overallLevel: Int
+  walkingLevel: Int
+  runningLevel: Int
+  bikingLevel: Int
+  owner: String
+  profilePictureKey: String
+  firstName: String
+  lastName: String
+  state: String
+  city: String
+  birthDate: String
+  createdAt: AWSDateTime
+  updatedAt: AWSDateTime
+  workoutsNumber: Int
+  notifications: [NotificationProfile]
+    @connection(keyName: "byProfile", fields: ["userId"])
+  dailyOverallStats: [DailyOverallStats]
+    @connection(keyName: "byProfile", fields: ["userId"])
+  overallStats: OverallStats @connection(fields: ["userId"])
+  conversations: [ConversationProfile]
+    @connection(keyName: "byProfile", fields: ["userId"])
+  events: [EventAttendant] @connection(keyName: "byProfile", fields: ["userId"])
+  comments: [Comment!]!
+}
